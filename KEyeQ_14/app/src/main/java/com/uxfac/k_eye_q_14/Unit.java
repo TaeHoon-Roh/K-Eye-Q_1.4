@@ -17,6 +17,13 @@ import java.util.ArrayList;
  */
 
 public class Unit {
+
+    public static String fxloadPath = "-i /sdcard/usb_stream_firmware.img -t fx3 -d 04b4:00f3";
+
+
+
+
+
     public static byte[] result_buf_1d = new byte[9600];
     public static int CNN_xBuf_size = 0;
     public static float[] CNN_output_prev = new float[4800];

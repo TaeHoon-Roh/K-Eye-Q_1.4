@@ -1,10 +1,15 @@
 #include <jni.h>
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <stdio.h>
 #include "usb/libusb.h"
+#include "ezusb-lib.h"
 
-static std::string print_devs(libusb_device **devs){
+using namespace std;
+
+static string path = "/data/data/com.uxfac.k_eye_q_14/files/test.txt";
+static string print_devs(libusb_device **devs){
     libusb_device *dev;
     int i = 0, j = 0;
     int count = 0;
@@ -60,8 +65,8 @@ Java_com_uxfac_k_1eye_1q_114_InitDataActivity_stringFromJNI(
         JNIEnv *env,
         jobject /* this */) {
     
-    std::string hello = "Hello from C++";
-    libusb_device **devs;
+    string hello = "Hello from C++";
+    /*libusb_device **devs;
     int r;
     ssize_t cnt;
 
@@ -82,6 +87,38 @@ Java_com_uxfac_k_1eye_1q_114_InitDataActivity_stringFromJNI(
     hello = print_devs(devs);
     libusb_free_device_list(devs,1);
     libusb_exit(NULL);
+    int num = testOutput();
+    char numstr[21];
+    sprintf(numstr,"%d",num);
+    hello = numstr;*/
+
+    return env->NewStringUTF(hello.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring
+
+JNICALL
+Java_com_uxfac_k_1eye_1q_114_InitDataActivity_ezusbJNI(
+        JNIEnv *env,
+        jobject /* this */) {
+
+    string hello = "hi";
+    int num = testOutput();
+    char numstr[21];
+    sprintf(numstr,"%d",num);
+    hello = numstr;
+    char ex[1000] = "hihi";
+
+    ifstream inFile(path);
+    int size = inFile.tellg();
+    if(!inFile.eof()){
+
+        inFile.close();
+    }
+    sprintf(ex,"%d",size);
+    hello = ex;
+
 
     return env->NewStringUTF(hello.c_str());
 }

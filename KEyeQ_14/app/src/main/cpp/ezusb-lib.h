@@ -89,32 +89,15 @@ typedef struct {
 	{ 0x04b4, 0x00f3, FX_TYPE_FX3, "Cypress FX3" },\
 }
 
-/*
- * This function uploads the firmware from the given file into RAM.
- * Stage == 0 means this is a single stage load (or the first of
- * two stages).  Otherwise it's the second of two stages; the
- * caller having preloaded the second stage loader.
- *
- * The target processor is reset at the end of this upload.
- */
-/*
- * This function uploads the firmware from the given file into EEPROM.
- * This uses the right CPUCS address to terminate the EEPROM load with
- * a reset command where FX parts behave differently than FX2 ones.
- * The configuration byte is as provided here (zero for an21xx parts)
- * and the EEPROM type is set so that the microcontroller will boot
- * from it.
- *
- * The caller must have preloaded a second stage loader that knows
- * how to respond to the EEPROM write request.
- */
-extern int ezusb_load_eeprom(libusb_device_handle *device,
-                             const char *path, int fx_type, int img_type, int config);
-
 int ezusb_load_ram(libusb_device_handle *device, const char *path, int fx_type, int img_type, int stage);
 
-/* Verbosity level (default 1). Can be increased or decreased with options v/q  */
 extern int verbose;
+
+int testOutput();
+
+//fxload add
+
+int fxload(int argc, char*argv[]);
 
 #ifdef __cplusplus
 }

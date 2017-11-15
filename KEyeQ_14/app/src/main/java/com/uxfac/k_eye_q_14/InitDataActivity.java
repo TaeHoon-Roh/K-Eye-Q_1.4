@@ -1,6 +1,8 @@
 package com.uxfac.k_eye_q_14;
 
+import android.content.Context;
 import android.os.Build;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class InitDataActivity extends AppCompatActivity implements View.OnClickListener {
@@ -31,8 +37,27 @@ public class InitDataActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
+        String sdcardPath = null;
+        String sdcardStat = Environment.getExternalStorageState();
+        if(sdcardStat.equals(Environment.MEDIA_MOUNTED))
+        {
+            sdcardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        }
+
+        byte[] temp;
+        temp = new byte[100];
+        try {
+            FileInputStream fi = new FileInputStream(new File("/storage/emulated/0","test.txt"));
+            fi.read(temp);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         if(view.getId() == R.id.button){
-            tv1.setText(ezusbJNI());
+            tv1.setText(new String(temp));
         }
     }
 }
